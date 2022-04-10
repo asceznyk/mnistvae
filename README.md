@@ -1,0 +1,2 @@
+# mnistvae
+MNIST - Variational Autoencoders
