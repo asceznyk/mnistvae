@@ -23,12 +23,12 @@ class Encoder(nn.Module):
 
     def forward(self, x):
         x = self.enc(x)
-        print(x.size())
         x = self.dense(x.view(x.size()[0], -1))
         z_mean = self.mu(x)
         z_std = self.sigma(x)
         eps = torch.normal(0.0, 1.0, size=z_mean.size())
         z = z_mean + torch.exp(z_std * 0.5) * eps
+
         return z, z_mean, z_std
 
 class Decoder(nn.Module):
@@ -37,17 +37,20 @@ class Decoder(nn.Module):
         self.img_dim = img_dim
         self.z_dim = z_dim
 
-        self.dense = nn.Linear(z_dim, 6*6*64)
+        self.dense = nn.Linear(z_dim, 7*7*64)
 
         self.dec = nn.Sequential(
-            nn.ConvTranspose2d(64, 64, kernel_size=3, stride=2),
-            nn.ReLU(),
             nn.ConvTranspose2d(64, 32, kernel_size=3, stride=2),
             nn.ReLU(),
-            nn.ConvTranspose2d()
+            nn.ConvTranspose2d(32, img_dim[0], kernel_size=3, stride=2),
+            nn.Sigmoid(),
         )
 
+    def forward(self, x):
+        x = self.dense(x)
+        x = self.dec(x)
+        print(x.size())
 
-
+        return x
 
 
