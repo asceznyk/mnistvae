@@ -23,8 +23,7 @@ class Encoder(nn.Module):
 
     def forward(self, x):
         x = self.enc(x)
-        print(x.view(x.size()[0],-1).size())
-        x = self.dense(x.view(0, -1))
+        x = self.dense(x.view(x.size()[0], -1))
         z_mean = self.mu(x)
         z_std = self.sigma(x)
         z = torch.normal(z_mean, z_std)
