@@ -23,7 +23,7 @@ def main():
                         shuffle=False, 
                         collate_fn=pil_to_tensor)
 
-    encoder = Encoder((28,28,1), latent_dim)
+    encoder = Encoder((1,28,28), latent_dim)
 
     print(encoder(next(iter(loader))))
 
