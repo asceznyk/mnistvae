@@ -12,7 +12,7 @@ from model import *
 
 def pil_to_tensor(imgs):
     imgs = np.array([np.array(img) for img, _ in imgs])
-    return torch.from_numpy(np.array(imgs)).unsqueeze(1)
+    return torch.from_numpy(np.array(imgs)).unsqueeze(1).float()
     
 def main():
     latent_dim = 2
