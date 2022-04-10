@@ -9,8 +9,8 @@ import torchvision
 from torchvision.datasets import MNIST
 
 def pil_to_tensor(imgs):
-    print(np.array(imgs))
-    return torch.from_numpy(np.array(imgs)).unsqueeze(0)
+    imgs = np.array([np.array(img) for img in imgs])
+    return torch.from_numpy(np.array(imgs)).unsqueeze(1)
     
 def main():
     latent_dim = 2
@@ -23,7 +23,7 @@ def main():
 
     bt = next(iter(loader))
 
-    print(bt.size)
+    print(bt.size())
 
 if __name__ == '__main__':
     main()
