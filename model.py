@@ -42,7 +42,7 @@ class Decoder(nn.Module):
         self.dec = nn.Sequential(
             nn.ConvTranspose2d(64, 64, kernel_size=3, stride=2),
             nn.ReLU(),
-            nn.ConvTranspose2d(64, 32, kernel_size=3, stride=2)
+            nn.ConvTranspose2d(64, 32, kernel_size=3, stride=2),
             nn.ReLU(),
             nn.ConvTranspose2d()
         )
