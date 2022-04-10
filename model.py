@@ -49,7 +49,6 @@ class Decoder(nn.Module):
     def forward(self, x):
         x = self.dense(x)
         x = self.dec(x.view(x.size()[0], 64, 7, 7))
-        print(x.size())
 
         return x
 
