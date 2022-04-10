@@ -24,8 +24,13 @@ def main():
                         collate_fn=pil_to_tensor)
 
     encoder = Encoder((1,28,28), latent_dim)
+    decoder = Decoder((1,28,28), latent_dim) 
 
-    print(encoder(next(iter(loader))))
+    z, _, _ = encoder(next(iter(loader)))
+    gen = decoder(z)
+
+    print(gen.size())
+    print(gen)
 
 if __name__ == '__main__':
     main()
