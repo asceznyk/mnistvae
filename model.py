@@ -40,9 +40,9 @@ class Decoder(nn.Module):
         self.dense = nn.Linear(z_dim, 7*7*64)
 
         self.dec = nn.Sequential(
-            nn.ConvTranspose2d(64, 32, kernel_size=3, stride=2),
+            nn.ConvTranspose2d(64, 32, kernel_size=4, stride=2, pad=1),
             nn.ReLU(),
-            nn.ConvTranspose2d(32, img_dim[0], kernel_size=3, stride=2),
+            nn.ConvTranspose2d(32, img_dim[0], kernel_size=4, stride=2, pad=1),
             nn.Sigmoid(),
         )
 
