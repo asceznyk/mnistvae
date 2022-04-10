@@ -9,6 +9,7 @@ import torchvision
 from torchvision.datasets import MNIST
 
 def pil_to_tensor(imgs):
+    print(np.array(imgs))
     return torch.from_numpy(np.array(imgs)).unsqueeze(0)
     
 def main():
