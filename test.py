@@ -7,7 +7,7 @@ import torchvision
 from torchvision.datasets import MNIST
 
 def pil_to_tensor(img):
-    print(torch.from_numpy(np.array(img)).size))
+    print(torch.from_numpy(np.array(img)).size())
     return torch.from_numpy(np.array(img))
     
 def main():
