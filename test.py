@@ -25,7 +25,7 @@ def main():
 
     encoder = Encoder((28,28,1), latent_dim)
 
-    print(encoder)
+    print(encoder(next(iter(loader))))
 
 if __name__ == '__main__':
     main()
