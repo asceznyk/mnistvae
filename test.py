@@ -21,9 +21,9 @@ def main():
                         shuffle=False, 
                         collate_fn=pil_to_tensor)
 
-    bt = next(iter(loader))
+    encoder = Encoder((28,28,1), latent_dim)
 
-    print(bt.size())
+    print(encoder)
 
 if __name__ == '__main__':
     main()
