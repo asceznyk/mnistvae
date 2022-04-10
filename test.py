@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+import torch
+
 import torchvision
 from torchvision.datasets import MNIST
 
