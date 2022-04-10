@@ -26,6 +26,7 @@ class Encoder(nn.Module):
         x = self.dense(x.view(x.size()[0], -1))
         z_mean = self.mu(x)
         z_std = self.sigma(x)
+        print(z_std)
         z = torch.normal(z_mean, z_std)
         return z, z_mean, z_std
 
