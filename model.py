@@ -23,6 +23,7 @@ class Encoder(nn.Module):
 
     def forward(self, x):
         x = self.enc(x)
+        print(x.size())
         x = self.dense(x.view(-1))
         z_mean = self.mu(x)
         z_std = self.sigma(x)
