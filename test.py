@@ -12,6 +12,10 @@ def main():
     latent_dim = 2
     mnist_data = MNIST(root='./', download=True)
 
+    img, _ = mnist_data[0]
+
+    pil_to_tensor(img)
+
 if __name__ == '__main__':
     main()
 
