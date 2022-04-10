@@ -11,9 +11,9 @@ class Encoder(nn.Module):
         self.z_dim = z_dim
 
         self.enc = nn.Sequential(
-            nn.Conv2d(img_dim[0], 32, kernel_size=3, stride=2, pad=1),
+            nn.Conv2d(img_dim[0], 32, kernel_size=3, stride=2, padding=1),
             nn.ReLU(),
-            nn.Conv2d(32, 64, kernel_size=3, stride=2, pad=1),
+            nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1),
             nn.ReLU(),
         )
 
