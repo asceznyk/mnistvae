@@ -33,7 +33,7 @@ def main():
     #gen = decoder(z)
 
     to_show = next(iter(loader))
-    make_grid(to_show, nrow=batch_size)
+    print(make_grid(to_show, nrow=batch_size))
 
 
 if __name__ == '__main__':
