@@ -29,9 +29,9 @@ def main():
 
     to_show = next(iter(loader))
     vae = VAE(img_dim, latent_dim)
-    y, z, ld, le = vae(to_show, is_training=True)
+    y, z, ld, le, total = vae(to_show, is_training=True)
 
-    print(ld, le)
+    print(ld, le, total)
 
     show(make_grid(to_show, nrows=batch_size))
     show(make_grid(y, nrows=batch_size), 'y_num.png')
