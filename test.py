@@ -29,7 +29,7 @@ def main():
 
     to_show = next(iter(loader))
     vae = VAE(img_dim, latent_dim)
-    y, z = vae(to_show)
+    y, z, _, _ = vae(to_show)
 
     print(vae)
     print(y)
