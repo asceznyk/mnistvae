@@ -17,13 +17,13 @@ def pil_to_tensor(imgs):
     return torch.from_numpy(np.array(imgs)).unsqueeze(1).float()
     
 def main():
-    batch_size = 8
+    batch_size = 128
     latent_dim = 2
     img_dim = (1, 28, 28)
     mnist_data = MNIST(root='./', download=True)
 
     loader = DataLoader(mnist_data, 
-                        batch_size=8, 
+                        batch_size=batch_size, 
                         shuffle=False, 
                         collate_fn=pil_to_tensor)
 
