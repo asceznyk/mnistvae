@@ -27,14 +27,13 @@ def main():
                         shuffle=False, 
                         collate_fn=pil_to_tensor)
 
-    #encoder = Encoder(img_dim, latent_dim)
-    #decoder = Decoder(img_dim, latent_dim) 
-
-    #z, _, _ = encoder(next(iter(loader)))
-    #gen = decoder(z)
-
     to_show = next(iter(loader))
-    show(make_grid(to_show, nrow=batch_size))
+    vae = VAE(img_dim, latent_dim)
+    y, z = vae(to_show)
+
+    print(vae)
+    print(y)
+    print(z)
 
 
 if __name__ == '__main__':

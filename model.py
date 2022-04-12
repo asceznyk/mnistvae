@@ -45,12 +45,30 @@ class Decoder(nn.Module):
             nn.Sigmoid(),
         )
 
-    def forward(self, x):
-        x = self.dense(x)
-        x = self.dec(x.view(x.size()[0], 64, 7, 7))
+    def forward(self, z):
+        z = self.dense(z)
+        x = self.dec(z.view(z.size()[0], 64, 7, 7))
         return x
 
+class VAE(nn.Module):
+    def __init__(self, img_dim, z_dim):
+        super(VAE, self).__init__()
+        self.img_dim = img_dim
+        self.z_dim = z_dim
 
+        self.encoder = Encoder(img_dim, z_dim)
+        self.decoder = Decoder(img_dim, z_dim)
+
+    def forward(x, is_training=False):
+        z, z_mean, z_std = self.encoder(x)
+        y = self.decoder(z)
+
+        loss_decoder, loss_endoder = None, None
+        if is_training:
+            loss_decoder = F.binary_cross_entropy(y, x)
+            loss_endoder = -0.5 * (1 - z_std - torch.square(z_mean) - torch.exp(z_std))
+            
+        return y, z, loss_decoder, loss_endoder
 
 
 
