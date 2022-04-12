@@ -31,6 +31,9 @@ def main():
     vae = VAE(img_dim, latent_dim)
     y, z, _, _ = vae(to_show)
 
+    show(make_grid(to_show))
+    show(make_grid(y), 'y_num.png')
+
     print(vae)
     print(y)
     print(z)

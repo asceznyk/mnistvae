@@ -8,7 +8,7 @@ import torchvision.transforms.functional as F
 plt.rcParams["savefig.bbox"] = 'tight'
 
 
-def show(imgs):
+def show(imgs, save_fig_path='grid_num.png'):
     if not isinstance(imgs, list):
         imgs = [imgs]
     fix, axs = plt.subplots(ncols=len(imgs), squeeze=False)
@@ -18,7 +18,7 @@ def show(imgs):
         axs[0, i].imshow(np.asarray(img))
         axs[0, i].set(xticklabels=[], yticklabels=[], xticks=[], yticks=[])
 
-    plt.savefig('grid_num.png')
+    plt.savefig(save_fig_path)
 
 
 
