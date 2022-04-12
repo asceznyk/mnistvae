@@ -63,7 +63,7 @@ class VAE(nn.Module):
         z, z_mean, z_std = self.encoder(x)
         y = self.decoder(z)
 
-        loss_decoder, loss_endoder = None, None
+        loss_decoder, loss_encoder = None, None
         if is_training:
             loss_decoder = F.binary_cross_entropy(y, x)
             loss_endoder = -0.5 * (1 - z_std - torch.square(z_mean) - torch.exp(z_std))
