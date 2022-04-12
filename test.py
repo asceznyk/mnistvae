@@ -24,15 +24,15 @@ def main():
 
     loader = DataLoader(mnist_data, 
                         batch_size=batch_size, 
-                        shuffle=False, 
+                        shuffle=True, 
                         collate_fn=pil_to_tensor)
 
     to_show = next(iter(loader))
     vae = VAE(img_dim, latent_dim)
     y, z, _, _ = vae(to_show)
 
-    show(make_grid(to_show))
-    show(make_grid(y), 'y_num.png')
+    show(make_grid(to_show, nrows=batch_size))
+    show(make_grid(y, nrows=batch_size), 'y_num.png')
 
     print(vae)
     print(y)
