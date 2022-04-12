@@ -18,6 +18,8 @@ def show(imgs):
         axs[0, i].imshow(np.asarray(img))
         axs[0, i].set(xticklabels=[], yticklabels=[], xticks=[], yticks=[])
 
+    plt.savefig('grid_num.png')
+
 
 
 
