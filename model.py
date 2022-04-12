@@ -28,7 +28,6 @@ class Encoder(nn.Module):
         z_std = self.sigma(x)
         eps = torch.normal(0.0, 1.0, size=z_mean.size())
         z = z_mean + torch.exp(z_std * 0.5) * eps
-
         return z, z_mean, z_std
 
 class Decoder(nn.Module):
@@ -49,7 +48,6 @@ class Decoder(nn.Module):
     def forward(self, x):
         x = self.dense(x)
         x = self.dec(x.view(x.size()[0], 64, 7, 7))
-
         return x
 
 

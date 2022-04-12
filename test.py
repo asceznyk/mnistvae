@@ -16,6 +16,7 @@ def pil_to_tensor(imgs):
     
 def main():
     latent_dim = 2
+    img_dim = (1, 28, 28)
     mnist_data = MNIST(root='./', download=True)
 
     loader = DataLoader(mnist_data, 
@@ -23,14 +24,11 @@ def main():
                         shuffle=False, 
                         collate_fn=pil_to_tensor)
 
-    encoder = Encoder((1,28,28), latent_dim)
-    decoder = Decoder((1,28,28), latent_dim) 
+    encoder = Encoder(img_dim, latent_dim)
+    decoder = Decoder(img_dim, latent_dim) 
 
     z, _, _ = encoder(next(iter(loader)))
     gen = decoder(z)
-
-    print(gen.size())
-    print(gen)
 
 if __name__ == '__main__':
     main()
