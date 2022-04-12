@@ -4,9 +4,7 @@ import matplotlib.pyplot as plt
 
 import torchvision.transforms.functional as F
 
-
 plt.rcParams["savefig.bbox"] = 'tight'
-
 
 def show(imgs, save_fig_path='grid_num.png'):
     if not isinstance(imgs, list):

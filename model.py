@@ -68,7 +68,7 @@ class VAE(nn.Module):
             loss_decoder = F.binary_cross_entropy(y, x)
             loss_endoder = -0.5 * (1 - z_std - torch.square(z_mean) - torch.exp(z_std))
             
-        return y, z, loss_decoder, loss_endoder
+        return y, z, loss_decoder, loss_encoder
 
 
 
