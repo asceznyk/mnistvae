@@ -59,7 +59,7 @@ class VAE(nn.Module):
         self.encoder = Encoder(img_dim, z_dim)
         self.decoder = Decoder(img_dim, z_dim)
 
-    def forward(x, is_training=False):
+    def forward(self, x, is_training=False):
         z, z_mean, z_std = self.encoder(x)
         y = self.decoder(z)
 
