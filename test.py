@@ -9,6 +9,7 @@ import torchvision
 from torchvision.datasets import MNIST
 from torchvision.utils import make_grid 
 
+from utils import *
 from model import *
 
 def pil_to_tensor(imgs):
@@ -33,7 +34,7 @@ def main():
     #gen = decoder(z)
 
     to_show = next(iter(loader))
-    print(make_grid(to_show, nrow=batch_size))
+    show(make_grid(to_show, nrow=batch_size))
 
 
 if __name__ == '__main__':
