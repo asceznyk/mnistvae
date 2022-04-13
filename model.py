@@ -9,7 +9,7 @@ from torch.distributions import normal
 class Sampler(nn.Module):
     def __init__(self):
         super(Sampler, self).__init__()
-        self.dist = normal(0.0, 1.0)
+        self.dist = normal.Normal(0.0, 1.0)
     def forward(self, x):
         return self.dist.sample(x.size())
 
