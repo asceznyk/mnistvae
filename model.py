@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from torch.distributions import normal
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class Encoder(nn.Module):
     def __init__(self, img_dim, z_dim):
@@ -28,7 +28,7 @@ class Encoder(nn.Module):
         x = self.dense(x.view(x.size()[0], -1))
         z_mean = self.mu(x)
         z_std = self.sigma(x)
-        eps = torch.normal(0.0, 1.0, size=z_mean.size())
+        eps = torch.normal(0.0, 1.0, size=z_mean.size()).to(device)
         z = z_mean + torch.exp(z_std * 0.5) * eps
         return z, z_mean, z_std
 

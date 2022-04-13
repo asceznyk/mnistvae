@@ -14,8 +14,6 @@ from torchvision.utils import make_grid
 from utils import *
 from model import *
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 def pil_to_tensor(imgs):
     imgs = np.array([np.array(img)/255.0 for img, _ in imgs])
     return torch.from_numpy(np.array(imgs)).unsqueeze(1).float()
