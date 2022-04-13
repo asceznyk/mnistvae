@@ -71,7 +71,7 @@ def main():
                         shuffle=True, 
                         collate_fn=pil_to_tensor)
     
-    vae = VAE(img_dim, latent_dim)
+    vae = VAE(img_dim, latent_dim, device)
     fit(vae, loader, ckpt_path='vae_mnist.ckpt', epochs=epochs)
 
 if __name__ == '__main__':
