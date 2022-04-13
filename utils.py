@@ -26,12 +26,13 @@ def view_predict(vae, n=30, figsize=15, save_fig_path='vae_predict.png'):
     grid_x = np.linspace(-scale, scale, n)
     grid_y = np.linspace(-scale, scale, n)[::-1]
 
+    vae.eval()
     vae.cpu()
     for i, yi in enumerate(grid_y):
         for j, xi in enumerate(grid_x):
             z_sample = torch.tensor([[xi, yi]]).float().cpu()
             y = vae.decoder(z_sample)
-            digit = y[0].view(digit_size, digit_size)
+            digit = y[0].view(digit_size, digit_size).cpu().detach().numpy()
             figure[
                 i * digit_size : (i + 1) * digit_size,
                 j * digit_size : (j + 1) * digit_size,
