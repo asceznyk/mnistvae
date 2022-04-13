@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 
 import torchvision.transforms.functional as F
 
+from model import *
+
 plt.rcParams["savefig.bbox"] = 'tight'
 
 def show(imgs, save_fig_path='grid_num.png'):
@@ -26,9 +28,11 @@ def view_predict(vae, n=30, figsize=15, save_fig_path='vae_predict.png'):
     grid_x = np.linspace(-scale, scale, n)
     grid_y = np.linspace(-scale, scale, n)[::-1]
 
+    vae.to(device)
     for i, yi in enumerate(grid_y):
         for j, xi in enumerate(grid_x):
             z_sample = torch.tensor([[xi, yi]])
+            z_sample.to(device)
             y = vae.decoder(z_sample)
             digit = y[0].view(digit_size, digit_size)
             figure[
