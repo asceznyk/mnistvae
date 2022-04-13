@@ -39,13 +39,12 @@ def fit(vae, train_loader, valid_loader=None, ckpt_path=None, epochs=10):
                 optimizer.step()
 
             pbar.set_description(f"epoch: {e}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}")     
-        return avg_loss
-
-    vae.to(device)
+        return avg_loss 
 
     best_loss = float('inf') 
     optimizer = torch.optim.Adam(vae.parameters()) 
     for e in range(1, epochs+1):
+        vae.to(device)
         train_loss = run_epoch('train')
         valid_loss = run_epoch('valid') if valid_loader is not None else train_loss
 

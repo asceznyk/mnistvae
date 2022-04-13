@@ -29,7 +29,7 @@ def view_predict(vae, n=30, figsize=15, save_fig_path='vae_predict.png'):
     vae.cpu()
     for i, yi in enumerate(grid_y):
         for j, xi in enumerate(grid_x):
-            z_sample = torch.tensor([[xi, yi]]).cpu()
+            z_sample = torch.tensor([[xi, yi]]).float().cpu()
             y = vae.decoder(z_sample)
             digit = y[0].view(digit_size, digit_size)
             figure[
