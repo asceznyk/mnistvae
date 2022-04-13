@@ -28,8 +28,7 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10):
 
         avg_loss = 0
         pbar = tqdm(enumerate(loader), total=len(loader))
-        for imgs in pbar: 
-            print(imgs)
+        for i, imgs in pbar: 
             imgs = imgs.to(device)
             with torch.set_grad_enabled(is_train):  
                 y, z, loss_enc, loss_dec = model(imgs)
