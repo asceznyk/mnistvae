@@ -27,7 +27,7 @@ class Encoder(nn.Module):
         z_mean = self.mu(x)
         z_std = self.sigma(x)
         eps = torch.normal(0.0, 1.0, size=z_mean.size())
-        print(eps.get_device())
+        print(eps.get_device(), z_mean.get_device(), z_std.get_device())
         z = z_mean + torch.exp(z_std * 0.5) * eps
         return z, z_mean, z_std
 
