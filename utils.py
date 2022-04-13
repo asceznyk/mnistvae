@@ -50,6 +50,7 @@ def view_predict(vae, n=30, figsize=15, save_fig_path='vae_predict.png'):
     plt.ylabel("z[1]")
     plt.imshow(figure, cmap="Greys_r")
     plt.savefig(save_fig_path)
+    plt.close()
 
 
 
