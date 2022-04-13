@@ -12,6 +12,8 @@ from torchvision.utils import make_grid
 from utils import *
 from model import *
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 def pil_to_tensor(imgs):
     imgs = np.array([np.array(img)/255.0 for img, _ in imgs])
     return torch.from_numpy(np.array(imgs)).unsqueeze(1).float()
@@ -24,7 +26,8 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10):
 
         avg_loss = 0
         pbar = tqdm(enumerate(loader), total=len(loader))
-        for imgs in pbar:  
+        for imgs in pbar: 
+            imgs = imgs.to(device)
             with torch.set_grad_enabled(is_train):  
                 y, z, loss_enc, loss_dec = model(imgs)
                 loss = loss_enc + loss_dec
@@ -69,14 +72,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-
 
 
