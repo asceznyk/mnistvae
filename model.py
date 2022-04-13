@@ -4,6 +4,15 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from torch.distributions import normal
+
+class Sampler(nn.Module):
+    def __init__(self):
+        super(Sampler, self).__init__()
+        self.dist = normal(0.0, 1.0)
+    def forward(self, x):
+        return self.dist.sample(x.size())
+
 class Encoder(nn.Module):
     def __init__(self, img_dim, z_dim):
         super(Encoder, self).__init__()
@@ -17,6 +26,8 @@ class Encoder(nn.Module):
             nn.ReLU(),
         )
 
+        self.sampler = Sampler()
+
         self.dense = nn.Linear(64*7*7, 16)
         self.mu = nn.Linear(16, z_dim)
         self.sigma = nn.Linear(16, z_dim)
@@ -26,8 +37,7 @@ class Encoder(nn.Module):
         x = self.dense(x.view(x.size()[0], -1))
         z_mean = self.mu(x)
         z_std = self.sigma(x)
-        eps = torch.normal(0.0, 1.0, size=z_mean.size())
-        print(eps.get_device(), z_mean.get_device(), z_std.get_device())
+        eps = sampler(z_mean)
         z = z_mean + torch.exp(z_std * 0.5) * eps
         return z, z_mean, z_std
 
@@ -73,7 +83,6 @@ class VAE(nn.Module):
             loss_encoder = torch.mean(torch.sum(loss_encoder, dim=-1))
             
         return y, z, loss_decoder, loss_encoder 
-
 
 
 
