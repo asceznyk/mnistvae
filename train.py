@@ -52,7 +52,7 @@ def fit(vae, train_loader, valid_loader=None, ckpt_path=None, epochs=10):
 
         if ckpt_path is not None and valid_loss < best_loss:
             best_loss = valid_loss
-            torch.save(model.state_dict(), ckpt_path)
+            torch.save(vae.state_dict(), ckpt_path)
 
 def main():
     epochs = 30
