@@ -51,6 +51,8 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10):
         train_loss = run_epoch('train')
         valid_loss = run_epoch('valid') if valid_loader is not None else train_loss
 
+        view_predict(model)
+
         if ckpt_path is not None and valid_loss < best_loss:
             best_loss = valid_loss
             torch.save(model.state_dict(), ckpt_path)
