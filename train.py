@@ -18,10 +18,10 @@ def pil_to_tensor(imgs):
     imgs = np.array([np.array(img)/255.0 for img, _ in imgs])
     return torch.from_numpy(np.array(imgs)).unsqueeze(1).float()
 
-def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10):  
+def fit(vae, train_loader, valid_loader=None, ckpt_path=None, epochs=10):  
     def run_epoch(split):
         is_train = split == 'train' 
-        model.train(is_train)
+        vae.train(is_train)
         loader = train_loader if is_train else valid_loader
 
         avg_loss = 0
@@ -29,27 +29,27 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10):
         for i, imgs in pbar: 
             imgs = imgs.to(device)
             with torch.set_grad_enabled(is_train):  
-                y, z, loss_enc, loss_dec = model(imgs, is_training=is_train)
+                y, z, loss_enc, loss_dec = vae(imgs, is_training=is_train)
                 loss = loss_enc + loss_dec
                 avg_loss += loss.item() / len(loader)
 
             if is_train:
-                model.zero_grad() 
+                vae.zero_grad() 
                 loss.backward() 
                 optimizer.step()
 
             pbar.set_description(f"epoch: {e}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}")     
         return avg_loss
 
-    model.to(device)
+    vae.to(device)
 
     best_loss = float('inf') 
-    optimizer = torch.optim.Adam(model.parameters()) 
+    optimizer = torch.optim.Adam(vae.parameters()) 
     for e in range(1, epochs+1):
         train_loss = run_epoch('train')
         valid_loss = run_epoch('valid') if valid_loader is not None else train_loss
 
-        view_predict(model)
+        view_predict(vae)
 
         if ckpt_path is not None and valid_loss < best_loss:
             best_loss = valid_loss

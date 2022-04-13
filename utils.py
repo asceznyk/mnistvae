@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 
 import torchvision.transforms.functional as F
 
-from model import *
-
 plt.rcParams["savefig.bbox"] = 'tight'
 
 def show(imgs, save_fig_path='grid_num.png'):
