@@ -31,7 +31,7 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10):
         for i, imgs in pbar: 
             imgs = imgs.to(device)
             with torch.set_grad_enabled(is_train):  
-                y, z, loss_enc, loss_dec = model(imgs)
+                y, z, loss_enc, loss_dec = model(imgs, is_training=is_train)
                 loss = loss_enc + loss_dec
                 avg_loss += loss.item() / len(loader)
 
