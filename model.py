@@ -18,9 +18,7 @@ class Encoder(nn.Module):
             nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1),
             nn.ReLU(),
         )
-
-        self.sampler = Sampler()
-
+        
         self.dense = nn.Linear(64*7*7, 16)
         self.mu = nn.Linear(16, z_dim)
         self.sigma = nn.Linear(16, z_dim)
