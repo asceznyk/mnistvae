@@ -56,6 +56,9 @@ def view_predict(vae, n=30, figsize=15, save_fig_path='vae_predict.png'):
     plt.close()
 
 def view_label_clusters(vae, loader, save_fig_path='vae_clusters.png'):
+    vae.eval()
+    vae.cpu()
+
     z_mean = []
     for imgs, labels in data:
         mean, _, _ = vae.encoder(imgs)

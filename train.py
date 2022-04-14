@@ -60,7 +60,7 @@ def main():
             pbar.set_description(f"epoch: {e}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}") 
 
         view_predict(vae)
-        view_label_clusters(loader)
+        view_label_clusters(vae, loader)
 
         if ckpt_path is not None and avg_loss < best_loss:
             best_loss = avg_loss
