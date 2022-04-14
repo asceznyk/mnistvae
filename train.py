@@ -47,8 +47,8 @@ def main():
         for i, imgs in pbar: 
             imgs = imgs.to(device)
             with torch.set_grad_enabled(is_train):  
-                y, z, loss_enc, loss_dec = vae(imgs, is_training=is_train)
-                loss = loss_enc + loss_dec
+                y, z, loss_recons, loss_kl = vae(imgs, is_training=is_train)
+                loss = loss_recons + loss_kl 
                 avg_loss += loss.item() / len(loader)
 
             if is_train:
