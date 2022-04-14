@@ -18,11 +18,29 @@ def pil_to_tensor(imgs):
     imgs = np.array([np.array(img)/255.0 for img, _ in imgs])
     return torch.from_numpy(np.array(imgs)).unsqueeze(1).float()
 
-def fit(vae, train_loader, valid_loader=None, ckpt_path=None, epochs=10):  
-    def run_epoch(split):
-        is_train = split == 'train' 
-        vae.train(is_train)
-        loader = train_loader if is_train else valid_loader
+def main():
+    epochs = 30
+    batch_size = 128
+    latent_dim = 2
+    img_dim = (1, 28, 28)
+    is_train = True
+    ckpt_path='vae_mnist.ckpt'
+
+    mnist_data = MNIST(root='./', download=True)
+
+    loader = DataLoader(mnist_data, 
+                        batch_size=batch_size, 
+                        shuffle=True, 
+                        collate_fn=pil_to_tensor)
+
+    vae = VAE(img_dim, latent_dim, device)
+
+    vae.train(is_train)
+    best_loss = float('inf') 
+    optimizer = torch.optim.Adam(vae.parameters()) 
+
+    for e in range(1, epochs+1):
+        vae.to(device)
 
         avg_loss = 0
         pbar = tqdm(enumerate(loader), total=len(loader))
@@ -38,38 +56,13 @@ def fit(vae, train_loader, valid_loader=None, ckpt_path=None, epochs=10):
                 loss.backward() 
                 optimizer.step()
 
-            pbar.set_description(f"epoch: {e}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}")     
-        return avg_loss 
+            pbar.set_description(f"epoch: {e}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}") 
 
-    best_loss = float('inf') 
-    optimizer = torch.optim.Adam(vae.parameters()) 
-    for e in range(1, epochs+1):
-        vae.to(device)
-        train_loss = run_epoch('train')
-        valid_loss = run_epoch('valid') if valid_loader is not None else train_loss
+            view_predict(vae)
 
-        view_predict(vae)
-
-        if ckpt_path is not None and valid_loss < best_loss:
-            best_loss = valid_loss
-            torch.save(vae.state_dict(), ckpt_path)
-
-def main():
-    epochs = 30
-    batch_size = 128
-    latent_dim = 2
-    img_dim = (1, 28, 28)
-    is_training = True
-
-    mnist_data = MNIST(root='./', download=True)
-
-    loader = DataLoader(mnist_data, 
-                        batch_size=batch_size, 
-                        shuffle=True, 
-                        collate_fn=pil_to_tensor)
-    
-    vae = VAE(img_dim, latent_dim, device)
-    fit(vae, loader, ckpt_path='vae_mnist.ckpt', epochs=epochs)
+            if ckpt_path is not None and avg_loss < best_loss:
+                best_loss = avg_loss
+                torch.save(vae.state_dict(), ckpt_path)
 
 if __name__ == '__main__':
     main()
