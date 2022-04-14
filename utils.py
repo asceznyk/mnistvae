@@ -77,6 +77,6 @@ def view_label_clusters(vae, loader, save_fig_path='vae_clusters.png'):
     plt.xlabel("z[0]")
     plt.ylabel("z[1]")
     plt.savefig(save_fig_path)
-    plt.show()
+    plt.close()
 
 
