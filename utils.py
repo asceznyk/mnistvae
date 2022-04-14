@@ -39,11 +39,14 @@ def view_predict(vae, n=30, figsize=15, save_fig_path='vae_predict.png'):
             ] = digit
 
     plt.figure(figsize=(figsize, figsize))
+    
     start_range = digit_size // 2
     end_range = n * digit_size + start_range
     pixel_range = np.arange(start_range, end_range, digit_size)
+    
     sample_range_x = np.round(grid_x, 1)
     sample_range_y = np.round(grid_y, 1)
+    
     plt.xticks(pixel_range, sample_range_x)
     plt.yticks(pixel_range, sample_range_y)
     plt.xlabel("z[0]")
@@ -52,5 +55,20 @@ def view_predict(vae, n=30, figsize=15, save_fig_path='vae_predict.png'):
     plt.savefig(save_fig_path)
     plt.close()
 
+def view_label_clusters(vae, loader, save_fig_path='vae_clusters.png'):
+    z_mean = []
+    for imgs, labels in data:
+        mean, _, _ = vae.encoder(imgs)
+        z_mean.append(mean)
+
+    z_mean = torch.tensor(z_mean)
+
+    plt.figure(figsize=(12, 10))
+    plt.scatter(z_mean[:, 0], z_mean[:, 1], c=labels)
+    plt.colorbar()
+    plt.xlabel("z[0]")
+    plt.ylabel("z[1]")
+    plt.savefig(save_fig_path)
+    plt.show()
 
 

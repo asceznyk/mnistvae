@@ -14,9 +14,10 @@ from torchvision.utils import make_grid
 from utils import *
 from model import *
 
-def pil_to_tensor(imgs):
-    imgs = np.array([np.array(img)/255.0 for img, _ in imgs])
-    return torch.from_numpy(np.array(imgs)).unsqueeze(1).float()
+def pil_to_tensor(batch):
+    imgs = np.array([np.array(img)/255.0 for img, _ in batch])
+    labels = torch.from_numpy(np.array([b[1] for b in batch])).float()
+    return torch.from_numpy(np.array(imgs)).unsqueeze(1).float(), labels
 
 def main():
     epochs = 30
@@ -44,7 +45,7 @@ def main():
 
         avg_loss = 0
         pbar = tqdm(enumerate(loader), total=len(loader))
-        for i, imgs in pbar: 
+        for i, (imgs, labels) in pbar: 
             imgs = imgs.to(device)
             with torch.set_grad_enabled(is_train):  
                 y, z, loss_recons, loss_kl = vae(imgs, is_training=is_train)
@@ -59,6 +60,7 @@ def main():
             pbar.set_description(f"epoch: {e}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}") 
 
         view_predict(vae)
+        view_label_clusters(loader)
 
         if ckpt_path is not None and avg_loss < best_loss:
             best_loss = avg_loss
