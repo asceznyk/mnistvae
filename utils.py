@@ -60,13 +60,16 @@ def view_label_clusters(vae, loader, save_fig_path='vae_clusters.png'):
     vae.cpu()
 
     z_mean = []
-    for imgs, labels in loader:
-        _, mean, _ = vae.encoder(imgs, x_device=torch.device('cpu'))
+    labels = []
+    for img, label in loader:
+        _, mean, _ = vae.encoder(img, x_device=torch.device('cpu'))
         z_mean.extend(mean.detach().cpu().numpy())
+        labels.extend(label.detach().cpu().numpy())
 
     z_mean = np.array(z_mean)
+    labels = np.array(labels)
 
-    print(z_mean.shape)
+    print(z_mean.shape, labels.shape)
 
     plt.figure(figsize=(12, 10))
     plt.scatter(z_mean[:, 0], z_mean[:, 1], c=labels)
