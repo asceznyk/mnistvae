@@ -60,7 +60,7 @@ def view_label_clusters(vae, loader, save_fig_path='vae_clusters.png'):
     vae.cpu()
 
     z_mean = []
-    for imgs, labels in data:
+    for imgs, labels in loader:
         mean, _, _ = vae.encoder(imgs)
         z_mean.append(mean)
 
