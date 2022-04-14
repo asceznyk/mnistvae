@@ -23,12 +23,12 @@ class Encoder(nn.Module):
         self.mu = nn.Linear(16, z_dim)
         self.sigma = nn.Linear(16, z_dim)
 
-    def forward(self, x):
+    def forward(self, x, x_device=device):
         x = self.enc(x)
         x = self.dense(x.view(x.size()[0], -1))
         z_mean = self.mu(x)
         z_std = self.sigma(x)
-        eps = torch.normal(0.0, 1.0, size=z_mean.size()).to(device)
+        eps = torch.normal(0.0, 1.0, size=z_mean.size()).to(x_device)
         z = z_mean + torch.exp(z_std * 0.5) * eps
         return z, z_mean, z_std
 
